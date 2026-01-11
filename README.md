@@ -1,6 +1,6 @@
 # custom-element-registry
 
-ℹ️ **_[ATTENTION]_** You don't need this tool if your project has a modern build process (with tools like Vite, Webpack, Parcel) This package was made for a legacy use-case, where it was undesired to implement complex build process, but there was a need to create a modern web app experience.
+ℹ️ ** You don't need this tool if your project has a modern build process (with tools like Vite, Webpack, Parcel) This package was made for a legacy use-case, where it was undesired to implement complex build process, but there was a need to create a modern web app experience. **
 
 A lightweight service for dynamically loading and registering custom web components. Perfect for lazy-loading components or building modular applications.
 
