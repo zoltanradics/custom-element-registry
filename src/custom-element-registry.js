@@ -72,7 +72,7 @@ function registerCustomElement(module, prefix, verbose) {
 	}
 
 	const tagName = module.tagName ? module.tagName : generateTagName(module.default.name);
-	const finalTagName = typeof prefix !== 'undefined' ? `${prefix}-${tagName}` : tagName
+	const finalTagName = typeof prefix !== 'undefined' ? `${prefix.toLowerCase()}-${tagName}` : tagName
 	const customElementClass = module.default;
 
 	customElements.define(finalTagName, customElementClass);
