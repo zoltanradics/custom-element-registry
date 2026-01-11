@@ -1,7 +1,7 @@
 const TAG = '[CustomElementRegistry]';
 
 export default function customElementRegistry(filePaths, options = {}) {
-	const { verbose, prefix } = options;
+	const { verbose, prefix, allowedOrigins } = options;
 
 	if (!('customElements' in window)) {
 		return Promise.reject(new Error(`${TAG} Custom elements are not supported in this browser.`));
@@ -20,15 +20,18 @@ export default function customElementRegistry(filePaths, options = {}) {
 		return Promise.reject(new Error(`${TAG} All file paths must be non-empty strings.`));
 	}
 
+	// Validate origins if restriction is enabled
+	const originValidationError = validateOrigins(filePaths, allowedOrigins);
+	if (originValidationError) {
+		return Promise.reject(originValidationError);
+	}
+
 	// Load all the custom-element files
 	return loadCustomElements(filePaths).then((loadedCustomElementArray) => {
 		console.log(TAG, 'Custom elements are loaded.');
 
 		// Register all the successfully loaded custom-elements
-		loadedCustomElementArray.forEach((module) => registerCustomElement(module, prefix, verbose))
-
-	}).catch((error) => {
-		console.error(TAG, 'Failed to load custom elements.', error);
+		loadedCustomElementArray.forEach((module) => registerCustomElement(module, prefix, verbose));
 	});
 }
 
@@ -98,3 +101,62 @@ function generateTagName(className) {
 		.toLowerCase();
 }
 
+/**
+ * Checks if a path is an external URL (starts with http:// or https://)
+ *
+ * @param {string} path - The path to check
+ * @returns {boolean} True if the path is an external URL
+ */
+function isExternalUrl(path) {
+	return /^https?:\/\//i.test(path);
+}
+
+/**
+ * Validates that all file paths comply with origin restrictions
+ *
+ * @param {Array<string>} filePaths - Array of file paths to validate
+ * @param {Array<string>} [allowedOrigins] - Optional array of allowed origins
+ * @returns {Error|null} Error if validation fails, null if valid
+ */
+function validateOrigins(filePaths, allowedOrigins) {
+	if (allowedOrigins !== undefined && !Array.isArray(allowedOrigins)) {
+		return new Error(`${TAG} allowedOrigins must be an array of origin strings.`);
+	}
+
+	// If no allowedOrigins specified, block all external URLs by default
+	if (!allowedOrigins) {
+		const externalPaths = filePaths.filter(isExternalUrl);
+		if (externalPaths.length > 0) {
+			return new Error(
+				`${TAG} External URLs are not allowed by default. Use relative paths or specify allowedOrigins option.`
+			);
+		}
+		return null;
+	}
+
+	// If allowedOrigins is an empty array, allow all origins (opt-out of security)
+	if (allowedOrigins.length === 0) {
+		return null;
+	}
+
+	// Validate external URLs against allowedOrigins whitelist
+	const disallowedPaths = filePaths.filter(path => {
+		if (!isExternalUrl(path)) {
+			return false; // Relative paths are always allowed
+		}
+		try {
+			const url = new URL(path);
+			return !allowedOrigins.includes(url.origin);
+		} catch {
+			return true; // Invalid URLs are not allowed
+		}
+	});
+
+	if (disallowedPaths.length > 0) {
+		return new Error(
+			`${TAG} Paths from disallowed origins detected: ${disallowedPaths.join(', ')}`
+		);
+	}
+
+	return null;
+}
