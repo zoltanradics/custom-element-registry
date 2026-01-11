@@ -1,0 +1,56 @@
+{
+  "name": "@zoltanradics/custom-element-registry",
+  "version": "0.1.0",
+  "description": "Service for loading and registering custom elements",
+  "main": "./dist/index.umd.js",
+  "module": "./dist/index.es.js",
+  "types": "./dist/index.d.ts",
+  "unpkg": "./dist/index.umd.js",
+  "jsdelivr": "./dist/index.umd.js",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.es.js",
+      "require": "./dist/index.umd.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build && cp src/custom-element-registry.d.ts dist/index.d.ts",
+    "preview": "vite preview",
+    "prepublishOnly": "npm run build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "custom-elements",
+    "web-components",
+    "lit",
+    "component-loader",
+    "registry",
+    "javascript",
+    "vanilla-js"
+  ],
+  "author": "Zoltan Radics",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zoltanradics/custom-element-registry.git"
+  },
+  "homepage": "https://github.com/zoltanradics/custom-element-registry#readme",
+  "bugs": {
+    "url": "https://github.com/zoltanradics/custom-element-registry/issues"
+  },
+  "devDependencies": {
+    "vite": "^7.3.1",
+    "vite-plugin-dts": "^4.5.4"
+  },
+  "dependencies": {
+    "@zoltanradics/async-script-loader": "^0.1.0"
+  }
+}
