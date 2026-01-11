@@ -153,3 +153,5 @@ Then open your browser to view the demo showcasing the component loading workflo
 ## License
 
 MIT © [Zoltan Radics](https://github.com/zoltanradics)
+
+Made with ❤️ by [Zoltan Radics](https://github.com/zoltanradics)
