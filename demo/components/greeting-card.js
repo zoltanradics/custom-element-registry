@@ -1,7 +1,10 @@
 /**
  * A simple greeting card custom element
  */
-export default  class GreetingCard extends HTMLElement {
+
+export const tagName = 'greeting-card';
+
+export default class GreetingCard extends HTMLElement {
 	constructor() {
 		super();
 		this.attachShadow({ mode: 'open' });
@@ -45,5 +48,3 @@ export default  class GreetingCard extends HTMLElement {
 		console.log('[GreetingCard] Component loaded and rendered');
 	}
 }
-
-customElements.define('greeting-card', GreetingCard);

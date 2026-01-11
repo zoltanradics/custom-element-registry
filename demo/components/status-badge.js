@@ -1,6 +1,9 @@
 /**
  * A status badge custom element
  */
+
+export const tagName = 'status-badge';
+
 export default class StatusBadge extends HTMLElement {
 	constructor() {
 		super();
@@ -46,5 +49,3 @@ export default class StatusBadge extends HTMLElement {
 		console.log('[StatusBadge] Component loaded and rendered');
 	}
 }
-
-customElements.define('status-badge', StatusBadge);

@@ -292,19 +292,19 @@
 			demoArea.innerHTML = `
 				<h3 style="margin-bottom: 20px; color: #333;">Custom Elements Loaded Successfully!</h3>
 
-				<greeting-card name="Developer" message="Welcome to the Demo!"></greeting-card>
-				<greeting-card name="Web Components" message="Hello from"></greeting-card>
+				<cer-greeting-card name="Developer" message="Welcome to the Demo!"></cer-greeting-card>
+				<cer-greeting-card name="Web Components" message="Hello from"></cer-greeting-card>
 
 				<div style="margin: 20px 0;">
-					<custom-button label="Click Me!"></custom-button>
-					<custom-button label="Try This Too!"></custom-button>
+					<cer-custom-button label="Click Me!"></cer-custom-button>
+					<cer-custom-button label="Try This Too!"></cer-custom-button>
 				</div>
 
 				<div style="margin: 20px 0;">
-					<status-badge status="success" text="Loaded"></status-badge>
-					<status-badge status="info" text="Ready"></status-badge>
-					<status-badge status="warning" text="Demo"></status-badge>
-					<status-badge status="error" text="Example"></status-badge>
+					<cer-status-badge status="success" text="Loaded"></cer-status-badge>
+					<cer-status-badge status="info" text="Ready"></cer-status-badge>
+					<cer-status-badge status="warning" text="Demo"></cer-status-badge>
+					<cer-status-badge status="error" text="Example"></cer-status-badge>
 				</div>
 
 				<div style="margin-top: 30px; padding: 20px; background: white; border-radius: 8px; border-left: 4px solid #4CAF50;">
@@ -335,7 +335,7 @@
 				addLog(`Loading ${componentFilePaths.length} component files...`, 'info');
 
 				// Use customElementRegistry to load all components
-				await customElementRegistry(componentFilePaths);
+				await customElementRegistry(componentFilePaths, { prefix: 'cer', verbose: true});
 
 				// This code executes AFTER all components are loaded
 				addLog('✓ All custom elements loaded successfully!', 'success');

@@ -1,6 +1,9 @@
 /**
  * A custom button element with click counter
  */
+
+export const tagName = 'custom-button'
+
 export default class CustomButton extends HTMLElement {
 	constructor() {
 		super();
@@ -64,5 +67,3 @@ export default class CustomButton extends HTMLElement {
 		console.log('[CustomButton] Component loaded and rendered');
 	}
 }
-
-customElements.define('custom-button', CustomButton);
